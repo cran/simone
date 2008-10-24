@@ -1,0 +1,12 @@
+Package: simone
+Version: 0.1-1
+Date: 2008-10-20
+Title: Statistical Inference for MOdular NEtworks (SIMoNe)
+Author: Christophe Ambroise <christophe.ambroise@genopole.cnrs.fr>, Julien Chiquet <julien.chiquet@genopole.cnrs.fr>, Gilles Grasseau <Gilles.Grasseau@genopole.cnrs.fr>, Alexander Adam Smith <asmith@genopole.cnrs.fr> 
+Maintainer: Gilles Grasseau <Gilles.Grasseau@genopole.cnrs.fr>
+Depends: R (>= 2.4.0)
+Description: The SIMoNe algorithm iteratively combines edge estimation and node classification on the basis of a mixture model for edge weight distributions. Edges inference may be managed via two alternative methods: GLasso and Meinhausan-Buhlman's approach. Node Classification is managed by MixNet, a mixture model for random graphs.
+License: GPL version 2
+URLs: http://www.r-project.org, http://stat.genopole.cnrs.fr
+Encoding: UTF-8
+Packaged: Fri Oct 24 16:37:43 2008; ggrasseau
