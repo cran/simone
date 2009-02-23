@@ -42,7 +42,7 @@
   misclassification holds for the $p^2$ potential edges. Thus, a
   correction can be applied by multiplying the risk by the expected
   number of edges. For instance, when one expects as many edges as
-  nodes, a typical risk to apply is $0.05 /p^2 \times p = 0.05 \times p$.
+  nodes, a typical risk to apply is \eqn{0.05 /p^2 \times p = 0.05 \times p}.
 
   If \code{classes} is \code{NULL}, a uniform penalty matrix is
   returned. If a vector of classes belonging is specified, a classified
