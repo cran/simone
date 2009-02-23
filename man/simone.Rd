@@ -4,10 +4,10 @@
 \title{Statistical Inference methods for MOdular NEtworks (SIMoNe)}
 
 \description{The \code{SIMoNe} algorithm iteratively combines edges
-  estimation by using $\ell_1$-norm regularization method and node
+  estimation by using \eqn{\ell_1}-norm regularization method and node
   classification on the basis of a mixture model of Laplace
   distributions for edge weight. Intuitively, the node class information
-  can be used to fine-tune the $\ell_1$ penalty parameter for each edge,
+  can be used to fine-tune the \eqn{\ell_1} penalty parameter for each edge,
   thus "focalising" more accurately on the correct graph structure.}
 
 \usage{

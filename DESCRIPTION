@@ -1,6 +1,6 @@
 Package: simone
-Version: 0.1-1
-Date: 2008-10-20
+Version: 0.1-2
+Date: 2009-02-23
 Title: Statistical Inference for MOdular NEtworks (SIMoNe)
 Author: Christophe Ambroise <christophe.ambroise@genopole.cnrs.fr>, Julien Chiquet <julien.chiquet@genopole.cnrs.fr>, Gilles Grasseau <Gilles.Grasseau@genopole.cnrs.fr>, Alexander Adam Smith <asmith@genopole.cnrs.fr> 
 Maintainer: Gilles Grasseau <Gilles.Grasseau@genopole.cnrs.fr>
@@ -9,4 +9,4 @@ Description: The SIMoNe algorithm iteratively combines edge estimation and node 
 License: GPL version 2
 URLs: http://www.r-project.org, http://stat.genopole.cnrs.fr
 Encoding: UTF-8
-Packaged: Fri Oct 24 16:37:43 2008; ggrasseau
+Packaged: Mon Feb 23 14:45:11 2009; ggrasseau

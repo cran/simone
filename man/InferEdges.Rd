@@ -103,7 +103,7 @@
   covariance estimation with the graphical lasso}, 9(3), p.~ 432--441,
   Biostatistics, 2008.
 
-  Meinshausen, N. and B{\"u}hlmann, P.  \emph{High-dimensional graphs and
+  Meinshausen, N. and B\"uhlmann, P.  \emph{High-dimensional graphs and
     variable selection with the lasso}, Ann. Statist., 34(3),
   p.~1436--1462, 2006
 }

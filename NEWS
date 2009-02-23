@@ -1,5 +1,9 @@
 NEWS/Changelog
 
+0.1-2	(2009-02-23)
+    +	fixing documentation errors occured with R-devel version 
+        (2.9.0 2009-02-19 r47958).
+
 0.1-1	(2008-10-20)
     +	first official release.
 
