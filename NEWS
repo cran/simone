@@ -1,5 +1,8 @@
 NEWS/Changelog
 
+0.1-3	(2009-05-28)
+    +	Minor bug in JRx computation. 
+
 0.1-2	(2009-02-23)
     +	fixing documentation errors occured with R-devel version 
         (2.9.0 2009-02-19 r47958).

@@ -429,7 +429,7 @@ Matrix inline Matrix::operator+( ) {
   double *mat_ = link_->matrix_;
 
   for (size_t i=0; i < row_*col_; i++) {
-    tab[i] = - mat_[i];
+    tab[i] =  mat_[i];
   }
   Matrix tmp(row_, col_, tab, false);
 
@@ -773,7 +773,7 @@ Matrix inline operator-(const double a, const Matrix& A ) {
   const double *mat_ = A.getMatrix();
 
   for (size_t i=0; i < row*col; i++) {
-    tab[i] = a + mat_[i];
+    tab[i] = a - mat_[i];
   }
   Matrix tmp(row, col, tab, false);
 

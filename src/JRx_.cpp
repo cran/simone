@@ -92,7 +92,7 @@ void JRx_C( int &n, int &Q,
     logTau   = max( log( Tau ),   log_eps ); 
     logalpha = max( log( alpha ), log_eps );
     
-    J =  sum( Tau | logTau ) +  sum ( Tau * logalpha ); 
+    J =  - sum( Tau | logTau ) +  sum ( Tau * logalpha ); 
     
     Matrix lnf(Q,Q);
     Matrix tau(Q,Q);
