@@ -70,7 +70,7 @@ class Matrix {
     struct s_data *link = new struct s_data;
     link -> matrix_ = new double [size_];
     link -> ref_    = 1;
-    LOGMSG( 4, std::cout, "New link", (long int) link->matrix_ );
+    LOGMSG( 4, std::cout, "New link", (size_t) link->matrix_ );
 
     LOGOutFct( std::cout );
     return(link);
@@ -81,7 +81,7 @@ class Matrix {
     struct s_data *link = new struct s_data;
     link -> matrix_ = ptr_;
     link -> ref_    = 1;
-    LOGMSG( 4, std::cout, "New link", (long int) link->matrix_ );
+    LOGMSG( 4, std::cout, "New link", (size_t) link->matrix_ );
     LOGOutFct( std::cout );
     return(link);
   }
@@ -89,7 +89,7 @@ class Matrix {
   void deleteLink( ){
     LOGInFct( std::cout );
     if ( (-- (link_-> ref_)) == 0 ) {
-      LOGMSG( 4, std::cout, "Freeing link", (long int) link_->matrix_ );
+      LOGMSG( 4, std::cout, "Freeing link", (size_t) link_->matrix_ );
       delete [] (link_->matrix_);
       delete link_;
       link_ = 0;
