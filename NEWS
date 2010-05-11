@@ -1,9 +1,13 @@
 NEWS/Changelog
 
-0.1-4	(2010-01-26)
-    +	Fix compilation error on Windows 64 
-        (dealing with debugging de messages) 
-
+1.0-0	(2010-05-17)
+    + 	Major release: this version and later are not compatible with
+        the previously released versions (sorry for the inconveniences -
+    	you can contact us if any help is required)
+    +   Complete rewrite of the package
+    +   New inference methods: multitask learning, VAR(1) inference
+    +   New plotting functions for network representation
+	
 0.1-3	(2009-05-28)
     +	Minor bug in JRx computation. 
 

@@ -1,0 +1,36 @@
+citHeader("To cite the R package 'simone' in publications use:")  
+
+citEntry(entry       = "techreport",
+         title       = "Inferring  multiple graphical structures",
+         institution = "arXiv",
+         year        = "2010",
+         author      = personList(
+           person(first="Julien", last="Chiquet"),
+           person(first="Yves", last="Grandvalet"),
+           person(first="Christophe", last="Ambroise")),         
+         textVersion = "J. Chiquet, Y. Grandvalet, and C. Ambroise (preprint). Inferring multiple graphical structures. preprint available on ArXiv : http://arxiv.org/abs/0912.4434.")
+
+citEntry(entry   = "Article",
+         title   = "Weighted-Lasso for Structured Network Inference from Time Course Data",
+         journal = "Statistical Applications in Genetics and Molecular Biology",
+         volume  = "9",
+         number  = "1",
+         year    = "2010",
+         author  = personList(
+           person(first="Camille", last="Charbonnier"),
+           person(first="Julien", last="Chiquet"),
+           person(first="Christophe", last="Ambroise")),
+         textVersion = "C. Charbonnier, J. Chiquet,  and C. Ambroise (2010). Weighted-Lasso for Structured Network Inference from Time Course Data. Statistical   Applications in Genetics and Molecular Biology, vol. 9, iss. 1,   article 15. http://www.bepress.com/sagmb/vol9/iss1/art15/")
+
+citEntry(entry  = "Article",
+         title  = "Inferring sparse Gaussian graphical models with latent structure",
+         journal= "Electronic Journal of Statistics",
+         volume = "3",
+         pages  = "205--238",
+         year   = "2009",
+         author  = personList(
+           person(first="Christophe", last="Ambroise"),
+           person(first="Julien", last="Chiquet"),
+           person(first="Catherine", last="Matias")),
+         textVersion = "C. Ambroise, J. Chiquet, and C. Matias (2009). Inferring sparse Gaussian graphical models with latent structure. Electronic Journal of Statistics, vol. 3, pp. 205--238. http://dx.doi.org/10.1214/08-EJS314")
+

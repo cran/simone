@@ -1,9 +1,12 @@
-export(simone, 
-       InferEdges, 
-       InferClasses, 
-       Penalty,
-       SimDataAffiliation,
-       Gplot,
-       Mplot)
-
 useDynLib(simone)
+export(coNetwork)
+export(getNetwork)
+export(plot.simone)
+export(plot.simone.network)
+export(rNetwork)
+export(rTranscriptData)
+export(setOptions)
+export(simone)
+import(mixer)
+S3method(plot, simone)
+S3method(plot, simone.network)
