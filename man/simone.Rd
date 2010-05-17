@@ -1,120 +1,216 @@
 \name{simone}
 \alias{simone}
 
-\title{Statistical Inference methods for MOdular NEtworks (SIMoNe)}
+\title{SIMoNe algorithm for network inference}
 
-\description{The \code{SIMoNe} algorithm iteratively combines edges
-  estimation by using \eqn{\ell_1}-norm regularization method and node
-  classification on the basis of a mixture model of Laplace
-  distributions for edge weight. Intuitively, the node class information
-  can be used to fine-tune the \eqn{\ell_1} penalty parameter for each edge,
-  thus "focalising" more accurately on the correct graph structure.}
+\description{%
+  The \code{simone} function offers an interface to infer networks based
+  on partial correlation coefficients in various contexts and methods
+  (steady-state data, time-course data, multiple sample setup,
+  clustering prior)
+}
 
 \usage{
-res <- simone (X, Q, ...) 
+simone(X,
+       type       = "steady-state",
+       clustering = FALSE,
+       tasks      = factor(rep(1, nrow(X))),
+       control    = setOptions())
 }
 
-\arguments{
-  \item{X}{
-     A \eqn{n \times p} empirical data matrix (e.g. gene epxressions).
-  }
-
-  \item{Q}{
-    Scalar : max number of classes to estimate.
+\arguments{%
+  \item{X}{%
+    a \eqn{n\times p}{n x p} matrix of data, typically \eqn{n}{n}
+    expression levels associated to the same \eqn{p}{p} genes. Can also
+    be a \code{data.frame} with \eqn{n}{n} entries, each column
+    corresponding to a variable (a gene). Specifying \code{colnames} to
+    \code{X} may be convenient in view of results analysis, since it
+    will be used to annotate the plots. Note that this is the only
+    required argument.
   }
   
-  \item{...}{ Additional arguments are available, see Details.}
-}
-
-\value{Returns a \code{simone} object containing the results of the
-  estimation. \code{simone} objects are list-like and contain the
-  following :
-
-  \item{cl}{Vector: the final estimation of node classification.}
-  \item{K.hat}{Matrix:  the final estimation of the precision matrix
-    (that is, the network adjacency matrix).}
-  \item{K.hat.perfect}{contains the estimation of \code{InferEdges}
-    using a classified penalty matrix built from the theoretic
-    classification. Requires the additional argument \code{theo.cl}.
+  \item{type}{%
+    a character string indicating the data specification (either
+    \code{"steady-state"} or \code{"time-course"} data). Default is
+    \code{"steady-state"}.
   }
-  \item{delta}{A vector of convergence criterium values.}
-  \item{iteration}{The final number of iterations.}
-}
+  
+  \item{clustering}{%
+    a logical indicating if the network inference should be perfomed by
+    penalizing the edges according to a latent clustering discovered
+    during the network structure recovery. Default is \code{FALSE}.
+  }
 
-\details{By default, the algorithm alternates classes estimation and
-  network estimation by himself, automatically constructing an penalty
-  matrix that slighlty encourages  an affiliation strucure. The user can
-  adapt the procedure by tuning the following parameters:
-  \describe{
-    \item{rho}{Base penalty value to use. Automatical yet
-      conservative value is calculated by default.}
+  \item{tasks}{%
+    A factor with \eqn{n}{n} entries indicating the task belonging
+    for each observation in the multiple sample framework. Default is
+    \code{factor(rep(1, nrow(X)))}, that is, all observations come from a
+    unique homogeneous sample.
+  }
 
-    \item{multipliers}{\code{list} containing the multiplicative
-      coefficients for adjusting the base penalty \code{rho} applied to
-      the edges, according to the involved nodes' classes.
-
-      Default is \code{multipliers=list(intra=1,inter=1.05,dust=1.1)}
-    }
-    \item{\code{num.iter}}{
-      The maximum number of iterations to attempt. Default \code{5}.
-    }
-    \item{\code{cl.theo}}{
-      The theoretic node classification. Required for 'perfect'
-     estimation. Default \code{NULL}.
-    }
-    \item{\code{verbose}}{
-      Boolean to trace progress on screen. Default \code{TRUE}..
-    }
+  \item{control}{%
+    A list that is used to specify low-level options for the
+    algorithm, defined through the \code{\link{setOptions}} function.
   }
 }
 
-\references{
-  C. Ambroise, J. Chiquet, and C. Matias. \emph{Penalized  maximum likelihood  inference for  sparse Gaussian
-    graphical models with latent structure}. SSB report
-  (20). INRA. Octobre 2008. \url{http://genome.jouy.inra.fr/ssb/preprint/}.
+\details{Any inference method available ("neighborhood selection",
+  "graphical-Lasso", "VAR(1) inference" and "multitask learning" - see
+  \code{\link{simone-package}}) relies on an   optimization problem under
+  the general form
+  \if{latex}{\deqn{%
+      \hat{\mathbf{\Theta}}_\lambda = \arg \max_{\mathbf{\Theta}} \mathcal{L}(\mathbf{\Theta};\mathbf{X}) - \lambda \ \textrm{pen}_{\ell_1}(\mathbf{\Theta},\mathbf{Z}),
+  }}
+  \if{html}{%
+    \out{
+<center>
+    &Theta;<sub>hat</sub> (&lambda;) = argmax<sub>&Theta;</sub> L(&Theta;; data) - &lambda; * pen<sub>l1</sub>(&Theta;, Z),
+</center>
+  }
 }
+\if{text}{\deqn{Theta.hat(lambda) = argmax_Theta L(Theta) - lambda * pen-l1(Theta,Z),
+}}
+where \eqn{\mathcal{L}}{L} is the log-likelihood of the model (pseudo
+  log-likelihood for "neighborhood selection") and \if{latex}{\eqn{\lambda}} \if{html}{\out{&lambda;}} \if{text}{lambda}
+  is a penalty parameter which controls the sparsity level of the
+  network. The \eqn{p\times p}{p x p} matrix
+  \if{latex}{\eqn{\mathbf{\Theta}}}\if{html}{\out{&Theta;}}\if{text}{Theta} describes the parameters (basically, the
+  edges) of the model, while \eqn{\mathbf{Z}}{Z} represents a latent
+  clustering which is also estimated when the argument \code{clustering}
+  is set to \code{TRUE}.
+
+ The model and the penalty function
+  \if{latex}{\eqn{\mathrm{pen}_{\ell_1}}}\if{html}{\out{pen<sub>l1</sub>}} \if{text}{pen-l1} differ according to the context
+  (steady-state/time-course data, multitask learning and its associated
+  coupling effect). For further details on the models, please check the
+  papers listed in the reference section of
+  \code{\link{simone-package}}.
+
+  The criterion displayed during a SIMoNe run is the value of the
+  penalized likelihood for the current values of the estimor  \if{latex}{\eqn{\hat{\mathbf{\Theta}}_\lambda}}\if{html}{\out{&Theta;<sub>hat</sub>(&lambda;)}} \if{text}{Theta.hat(lambda)} corresponding to
+  a given value of the overall penalty level \if{latex}{\eqn{\lambda}}\if{html}{\out{&lambda;}}\if{text}{lambda}.
+ 
+The following information criteria are also computed for any value of
+\if{latex}{\eqn{\lambda}}\if{html}{\out{&lambda;}}\if{text}{lambda}
+and part of the output of \code{simone}. The BIC (\emph{Bayesian
+  Information Criterion})
+
+ \if{latex}{\deqn{%
+     \textrm{BIC}(\lambda) =
+     \mathcal{L}(\hat{\mathbf{\Theta}}_\lambda;\mathbf{X}) -
+     \textrm{df}(\hat{\mathbf{\Theta}}_\lambda) \frac{\log(n)}{2},
+ }}
+   
+   \if{html}{\out{
+<center>
+    BIC(&lambda;) = L(&Theta;<sub>hat</sub>(&lambda;); data) - df(&Theta;<sub>hat</sub>(&lambda;)) log(n)/2,
+</center>
+}}
+\if{text}{\deqn{BIC(lambda) = L(Theta.hat(lambda);X) - df(Theta.hat(lambda)) log(n)/2,}}
+  and the AIC (\emph{Akaike Information Criterion})
+\if{latex}{\deqn{%
+    \textrm{AIC}(\lambda) = \mathcal{L}(\hat{\mathbf{\Theta}}_\lambda;\mathbf{X}) - \textrm{df}(\hat{\mathbf{\Theta}}_\lambda).
+  }}  
+  \if{html}{\out{
+<center>
+    AIC(&lambda;) = L(&Theta;<sub>hat</sub>(&lambda;); data) - df(&Theta;<sub>hat</sub>(&lambda;)) .
+</center>
+}
+}
+\if{text}{\deqn{AIC(lambda) = L(Theta.hat(lambda);X) - df(Theta.hat(lambda)).}}
+
+}
+
+\value{Returns an object of class \code{simone}, which is list-like and
+  contains the following:
+
+  \item{networks}{%
+    a list with all the inferred networks stocked as adjacency matrices (the successive values of
+    \if{latex}{\eqn{\hat{\mathbf{\Theta}}_\lambda}}\if{html}{\out{&Theta;}}\if{text}{Theta}
+    controled by the penalty level
+    \if{latex}{\eqn{\lambda}}\if{html}{\out{&lambda;}}\if{text}{lambda}). In
+    the multiple sample setup, each element of the list is a list with
+    as many entries as samples or levels in \code{tasks}.
+  }
+
+  \item{penalties}{%
+    a vector of the same length as \code{networks}, containing the
+    successive values of the penalty level.
+  }
+
+  \item{n.edges}{%
+    a vector of the same length as \code{networks}, containing the
+    successive numbers of edges in the inferred networks. In the multiple
+    sample setup, \code{n.edges} is a matrix with as many columns as
+    levels in \code{tasks}.
+  }
+  
+  \item{BIC}{%
+    a vector of the same length as \code{networks}, containing the value
+    of the BIC for the successively estimated networks.    
+  }
+
+  \item{AIC}{%
+    a vector of the same length as \code{networks}, containing the value
+    of the AIC for the successively estimated networks.    
+  }
+ 
+  \item{clusters}{a size-\eqn{p}{p} factor indicating the class
+    of each variable.
+  }
+
+  \item{weights}{%
+    a \eqn{p\times p}{pxp} matrix of weigths used to adapt the penalty to
+    each entry of the \code{Theta} matrix. It is inferred through the
+    algorithm according to the latent clustering of the network.  When
+    \code{clustering} is set to \code{FALSE}, all the weights are equal
+    to "1", which mean no adaptive penalization.
+  }
+
+  \item{control}{%
+    a list describing all the posterior values of the parameters used by
+    the algorithm, to compare with the one set by the
+    \code{\link{setOptions}} function. As a matter of fact, many of the options
+    are defined depending on the nature of the data and can be automatically corrected during internal checks of the coherence of desired options to the characteristics of the data.
+  }
+  
+}
+
+\note{%
+  If nothing particular is specified about the penalty through the
+  \code{control} list (see \code{\link{setOptions}}), the default is to
+  start from a value of
+  \if{latex}{\eqn{\lambda}}\if{html}{\out{&lambda;}}\if{text}{lambda}
+  that ensures an empty network. Then
+  \if{latex}{\eqn{\lambda}}\if{html}{\out{&lambda;}}\if{text}{lambda} is
+  progressively shrinked, as close to zero as possible. Along the
+  shrinkage of
+  \if{latex}{\eqn{\lambda}}\if{html}{\out{&lambda;}}\if{text}{lambda},
+  only networks with different numbers of edges are kept in the final
+  output.
+}
+
+\author{J. Chiquet}
 
 \seealso{
-  \code{\link{InferEdges}},
-  \code{\link{InferClasses}},
-  \code{\link{Penalty}},
-  \code{\link{SimDataAffiliation}},
-  \code{\link{Gplot}}.
+  \code{\link{setOptions}}, \code{\link{plot.simone}},
+  \code{\link{cancer}} and  \code{demo(package="simone")}. 
 }
-
 \examples{
-library(simone)
-## load the data set
+## load the breast cancer data set
 data(cancer)
+attach(cancer)
 
-p <- length(gene.names)
-cat("\n Breast cancer data set: real network with", p, "genes")
+## launch simone with the default parameters and plot results
+plot(simone(expr))
 
-## SIMoNe parameters
-Q <- 2
-mult <- list(init=1,intra=1,inter=2,dust=4)
-penalty.pcr <- Penalty(cancer.pcr, risk=0.1*p)[1,2]
-penalty.not <- Penalty(cancer.notpcr, risk=0.1*p)[1,2]
-rho.fracs <- c(1e-2,5e-2,7.5e-2,.25)
-rhos.pcr  <- rho.fracs * penalty.pcr
-rhos.not  <- rho.fracs * penalty.not
+## try with clustering now (clustering is achieved on a 30-edges network)
+plot(simone(expr, clustering=TRUE, control=setOptions(clusters.crit=30)))
 
-for (i in 1:length(rho.fracs)) {
-  
-  cat("\n Inferring network on the 'pCR' sample with rho =",rhos.pcr[i])
-  res.pcr <- simone(cancer.pcr,Q,rho=rhos.pcr[i],multipliers=mult )
-  cat("\n Inferring network on the 'not pCR' sample with rho =",rhos.not[i])
-  res.not <- simone(cancer.notpcr,Q,rho=rhos.not[i],multipliers=mult)
-  
-  a <- readline(prompt="\nPress enter to continue...")
-  
-  layout(matrix(c(1,2),1,2),width=c(1,1))
-  Gplot(res.pcr$K.hat, res.pcr$cl, cols=c(grey(0),grey(.8),grey(1)),
-        display.labels=TRUE, labels=gene.names,main="pCR")
-  Gplot(res.not$K.hat, res.not$cl, cols=c(grey(0),grey(.8),grey(1)),
-        display.labels=TRUE,labels=gene.names,main="not pCR")
-}
+## try the multiple sample
+plot(simone(expr, tasks=status))
+
+detach(cancer)
 }
 
-\author{ C. Ambroise, J. Chiquet and A. Smith }
 \keyword{htest}
