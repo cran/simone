@@ -1,12 +1,12 @@
 Package: simone
-Version: 1.0-0
-Date: 2010-05-11
+Version: 1.0-1
+Date: 2011-10-24
 Title: Statistical Inference for MOdular NEtworks (SIMoNe)
 Author: Julien Chiquet <julien.chiquet@genopole.cnrs.fr>, Gilles
         Grasseau <gilles.grasseau@genopole.cnrs.fr>, Camille
         Charbonnier <camille.charbonnier@genopole.cnrs.fr>, Christophe
         Ambroise <christophe.ambroise@genopole.cnrs.fr>.
-Maintainer: Gilles Grasseau <Gilles.Grasseau@genopole.cnrs.fr>
+Maintainer: Mixer <mixer@genopole.cnrs.fr>
 Depends: R (>= 2.7), mixer
 Description: The R package simone implements the inference of
         co-expression networks based on partial correlation
@@ -20,6 +20,6 @@ License: GPL (>= 2)
 URLs: http://www.r-project.org,
         http://stat.genopole.cnrs.fr/software/simone
 Encoding: UTF-8
-Packaged: 2010-05-17 09:08:33 UTC; ggrasseau
+Packaged: 2011-10-25 08:25:58 UTC; ggrasseau
 Repository: CRAN
-Date/Publication: 2010-05-17 10:36:44
+Date/Publication: 2011-10-26 18:01:10

@@ -1,5 +1,8 @@
 NEWS/Changelog
 
+1.0-1	(2010-10-24)
+    +   Fix warning with R 2.14
+
 1.0-0	(2010-05-17)
     + 	Major release: this version and later are not compatible with
         the previously released versions (sorry for the inconveniences -
