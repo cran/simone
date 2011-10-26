@@ -58,7 +58,8 @@ hist(as.matrix(expr[status == "pcr",]), main="pCR")
 hist(as.matrix(expr[status == "not",]), main="not pCR")
 
 ## mean of gene expression levels for pCR and not-pCR
-by(expr,status,mean)
+colMeans( expr[ which( status=="not"), ] )
+colMeans( expr[ which( status=="pcr"), ] )
 detach(cancer)
 }
 
