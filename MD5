@@ -1,13 +1,13 @@
-52d54c380750a0fad8620a818bfc5986 *DESCRIPTION
+a61979186d862cfd73fa37449aaf0e87 *DESCRIPTION
 dd76d7a4a1ae51d7fec936c67cf168b9 *NAMESPACE
-b2de980faaa4f41e69eba421367900db *NEWS
-944c7e6db60a6b0774d8e3dcaf292962 *R/Gplot-internals.R
+64b5cd3b4c6ef231856dad0bef2a41ac *NEWS
+14daa3308b6c08490b94c067e8c57e4e *R/Gplot-internals.R
 a269a6dcba3a6253c2c01705ec2c23e5 *R/Gplot.R
 ba9b69d0bf3433d2b70dcccaf173f988 *R/InferClasses.R
 25f882c23c5fae72e03bb47953f53575 *R/InferEdges-internals.R
 2ac5b555a851a145ce023d01ab1ba344 *R/InferEdges.R
 059f72826f692b36ebbe612d48b12cc1 *R/SimData.R
-64c989885d73015cb83b7b801ca6bc3f *R/init.R
+e46a67b1f813ed2b5b9ba606ded381cc *R/init.R
 56aa20db1f9ae6ecf5abb82cfbafe070 *R/plot.simone.R
 ebd642d88aa06d0f97e9f043244091b9 *R/plot.simone.network.R
 35c06b5ed7efbc25482dfa7fb6b2d541 *R/simone.R

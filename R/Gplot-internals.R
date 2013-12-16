@@ -1,5 +1,5 @@
 ##########################################################################
-#  
+#
 #  Routines to draw graphs.
 #
 #  These routines have been extracted from the SNA package (mainly gplot)
@@ -25,7 +25,7 @@
 #
 #    Gplot.vertex:       draw vertices.
 #
-#    Gplot.vertex.label: draw vertex labels. 
+#    Gplot.vertex.label: draw vertex labels.
 #
 #    Gplot.edge:         draw edges
 #                        Main steps:
@@ -43,7 +43,7 @@
 #   + sides of some boxed labels are not displayed
 #   + 2 variables (displayisolates and use.isolates) should be introduced
 #     to avoid taking into account of isolate vertices in the vertex coordinate
-#     computation (4 cases have to be studied). 
+#     computation (4 cases have to be studied).
 #
 #  To implement:
 #  ------------
@@ -62,7 +62,7 @@ Gplot.graphics<-function( mat, thresh=0, xlim=NULL, ylim=NULL, scale=1.0,
 # xlim, ylim (vector): x minimun and x maximum (same for y)
 # scale  (scalar)    : scaling factor for the whole graphics.
 # margin (scalar)    : margin value to add to all the graphics box sides.
-# main  (char): title  
+# main  (char): title
 # sub   (char): subtitle
 #
 # -------- Return value --------------------------------------------------
@@ -70,25 +70,25 @@ Gplot.graphics<-function( mat, thresh=0, xlim=NULL, ylim=NULL, scale=1.0,
 # graph (list): structure handling all graphics parameters (default)
 #
 # ------------------------------------------------------------------------
-  
+
    n<-dim(mat)[1]
 
    # Replace NAs with 0s
    mat[is.na(mat)]<-0
-   
+
    # Save a copy of mat
    mat.raw<-mat
-   
+
    # Binary matrix
    mat<-matrix(as.numeric(mat>thresh),n,n)
 
    l.graphics <- list( xlim=xlim, ylim=ylim, scale=scale, margin=margin,
-                       main=main, sub=sub, baserad=0, resolution=0 ) 
+                       main=main, sub=sub, baserad=0, resolution=0 )
 
    l.network <- list( mode=NULL, loop.draw=FALSE, vertex.pos.mode=NULL,
                       coord= NULL, displayisolates=TRUE, use=NULL,
                       vertex.reso=0, edge.reso=0, arrow.reso=0)
-   
+
    l.label   <- list( label=c(1:dim(mat)[1]), cex=1, col=1, pos=0,
                       useboxes=TRUE, box.margin=0.5, box.col=1,
                       box.bg="white", box.lty=NULL, box.lwd=par("lwd") )
@@ -120,7 +120,7 @@ Gplot.network <-function( graph,
 # -------- Arguments -----------------------------------------------------
 #
 # graph (list): structure handling all graphics parameters
-# mode  (char): kind of network to draw (not used). 
+# mode  (char): kind of network to draw (not used).
 # loop.draw       (bool): draw network loops (not implemented).
 # vertex.pos.mode (char): vertex positionning mode (not used).
 #                         "default" : simulated annealing
@@ -154,7 +154,7 @@ Gplot.network <-function( graph,
       vertex.pos.mode <- coord
 
     if( vertex.pos.mode == "default" ) {
-    
+
       # Provide default settings
       n           <- dim(graph$mat)[1]
       niter       <- 500
@@ -162,7 +162,7 @@ Gplot.network <-function( graph,
       area        <- n^2
       cool.exp    <- 3
       repulse.rad <- area*n
-    
+
       # Set initial positions (randomly) on the circle
       tempa<-(0:(n-1))/n
       if( random.pos == "random" ) {
@@ -170,7 +170,7 @@ Gplot.network <-function( graph,
       }
       x<-n/(2*pi)*sin(2*pi*tempa)
       y<-n/(2*pi)*cos(2*pi*tempa)
-      
+
       layout<-.C( "vertex_coord_C",
                  as.integer(graph$mat),
                  as.double(n), as.integer(niter),
@@ -179,12 +179,12 @@ Gplot.network <-function( graph,
                  x=as.double(x), y=as.double(y)#,
                 # PACKAGE="simone"
                  )
-    
+
       graph$network$coord <- cbind(layout$x,layout$y)
     } else if ( vertex.pos.mode == "circle" ) {
-      
+
         n           <- dim(graph$mat)[1]
-        
+
         if ( is.null( class ) ) {
         # Set initial positions on the circle
         tempa<-(0:(n-1))/n
@@ -194,7 +194,7 @@ Gplot.network <-function( graph,
       } else {
          f.class <- factor( class )
          class.dims <- rep(0, nlevels( f.class ))
-         n.class <- length( class.dims ) 
+         n.class <- length( class.dims )
          for (i in 1:nlevels( f.class ) ) {
            class.dims[i] <- length( which( f.class == levels(f.class)[i] ) )
          }
@@ -204,25 +204,25 @@ Gplot.network <-function( graph,
             IDInCircle[i] = IDInCircle[i-1] + class.dims[i-1]
          }
          xx <- vector()
-         yy <- vector()    
-         cst <- n/(2*pi) 
+         yy <- vector()
+         cst <- n/(2*pi)
          for ( i in 1:n ) {
            # compute coord
            class.i = class[i]
            card.class = class.dims[ class.i ]
            x <- cst * sin( IDInCircle[ class.i ] * 2 * pi / n )
            y <- cst * cos( IDInCircle[ class.i ] * 2 * pi / n )
-           IDInCircle[ class.i ] = IDInCircle[ class.i ] + 1         
-           xx <- append( xx, x) 
-           yy <- append( yy, y) 
+           IDInCircle[ class.i ] = IDInCircle[ class.i ] + 1
+           xx <- append( xx, x)
+           yy <- append( yy, y)
          }
          graph$network$coord <- cbind( xx, yy)
        }
-      
+
     } else if ( vertex.pos.mode == "circles" ) {
 
       n           <- dim(graph$mat)[1]
-      
+
       # Compute class size
       f.class <- factor( class )
       class.dims <- rep(0, nlevels( f.class ))
@@ -230,9 +230,9 @@ Gplot.network <-function( graph,
         class.dims[i] <- length( which( f.class == levels(f.class)[i] ) )
       }
 
-      
+
       # Set initial positions on the circle
-      n.class <- length( class.dims ) 
+      n.class <- length( class.dims )
       ang <- 2*pi /  n.class
       max.radius <- max( class.dims ) / (2*pi)
       # Space for labels between two circles
@@ -248,14 +248,14 @@ Gplot.network <-function( graph,
 
       x.shift <- rep( 0, n.class )
       y.shift <- rep( 0, n.class )
-      
+
       for ( i in 1:n.class ) {
 
         # shift
         x.shift[i] <-  max.radius * cos( (i-1) * ang + pi*0.5)
         y.shift[i] <-  max.radius * sin( (i-1) * ang + pi*0.5)
       }
-      IDInClass <- rep( 0, n.class ) 
+      IDInClass <- rep( 0, n.class )
       for ( i in 1:n ) {
         # compute coord
         class.i = class[i]
@@ -264,49 +264,49 @@ Gplot.network <-function( graph,
                   sin( 2*pi*( IDInClass[ class.i ] )/card.class)
         y <- y.shift[ class.i ] + card.class*one.over.two.pi*
                   cos( 2*pi*( IDInClass[ class.i ] )/card.class )
-        IDInClass[ class.i ] = IDInClass[ class.i ] + 1         
-        xx <- append( xx, x) 
-        yy <- append( yy, y) 
+        IDInClass[ class.i ] = IDInClass[ class.i ] + 1
+        xx <- append( xx, x)
+        yy <- append( yy, y)
       }
       graph$network$coord <- cbind( xx, yy)
-      
+
     }
   }
-  
+
   # Remove isolated vertex (if displayisolates FALSE)
-  use <- displayisolates | ( ! isolate.vertices( graph$mat ) ) 
+  use <- displayisolates | ( ! isolate.vertices( graph$mat ) )
 
   graph$network$use = use
-  
+
   x <- graph$network$coord[,1]
   y <- graph$network$coord[,2]
 
-                         
+
   # Set limits for plotting region
-  xlim = graph$graphics$xlim                
+  xlim = graph$graphics$xlim
   ylim = graph$graphics$ylim
   margin = graph$graphics$margin
   if(is.null(xlim)) {
-    xmin <- min(x[use]); xmax <- max(x[use]) 
+    xmin <- min(x[use]); xmax <- max(x[use])
     xlim<-c( xmin - (xmax - xmin) * margin, xmax + (xmax - xmin) * margin)  # Save x, y limits
   }
   if(is.null(ylim)) {
-    ymin <- min(y[use]); ymax <- max(y[use]) 
+    ymin <- min(y[use]); ymax <- max(y[use])
     ylim<-c( ymin - (ymax - ymin) * margin, ymax + (ymax - ymin) * margin )  # Save x, y limits
   }
-  xrng<-diff(xlim)          
+  xrng<-diff(xlim)
   yrng<-diff(ylim)
   xctr<-(xlim[2]+xlim[1])/2                 # Get center of plotting region
   yctr<-(ylim[2]+ylim[1])/2
-  
+
   # Force scale to be symmetric
   if(xrng<yrng)
     xlim<-c(xctr-yrng/2,xctr+yrng/2)
   else
     ylim<-c(yctr-xrng/2,yctr+xrng/2)
 
-  graph$graphics$xlim = xlim                
-  graph$graphics$ylim = ylim               
+  graph$graphics$xlim = xlim
+  graph$graphics$ylim = ylim
 
   # Extract "base radius"
   graph$baserad <- min(diff(xlim),diff(ylim))* graph$graphics$scale
@@ -319,7 +319,7 @@ Gplot.network <-function( graph,
   graph$network$edge.reso   = 0.5
   graph$network$arrow.reso  = 40
   graph$network$arrow.angle  = 20*pi/180
-  
+
   # Configure the graphic box
   plot( 0,0,
         xlim=graph$graphics$xlim,
@@ -347,7 +347,7 @@ Gplot.vertex <-function( graph,
 #
 # -------- Return value --------------------------------------------------
 #
-# graph (list): structure handling all graphics parameters 
+# graph (list): structure handling all graphics parameters
 #
 # ------------------------------------------------------------------------
 
@@ -363,7 +363,7 @@ Gplot.vertex <-function( graph,
    graph$vertex$lty    = lty
 
    n <- dim(graph$mat)[1]
-  
+
    # Build vectors describing vertex
    v.cex    <- rep( graph$vertex$cex                       , length=n)
    v.radius <- graph$resolution * graph$network$vertex.reso * v.cex
@@ -381,7 +381,7 @@ Gplot.vertex <-function( graph,
    v.lty    <-  v.lty[use]
 
    x <- graph$network$coord[use,1]
-   y <- graph$network$coord[use,2]   
+   y <- graph$network$coord[use,2]
    n <- length(x)
 
  # Compute the coordinates
@@ -418,10 +418,10 @@ Gplot.vertex.pie <-function( graph,
 #
 # -------- Return value --------------------------------------------------
 #
-# graph (list): structure handling all graphics parameters 
+# graph (list): structure handling all graphics parameters
 #
 # ------------------------------------------------------------------------
-  
+
   if( ! is.null(cex) )
     graph$vertex$cex <- cex
 
@@ -433,7 +433,7 @@ Gplot.vertex.pie <-function( graph,
       draw.pie <- TRUE
     }
   }
-  
+
   if ( length(col)  < n.sector ) {
     col <- sample( light.palette(n.sector, black=FALSE) )
   }
@@ -442,11 +442,11 @@ Gplot.vertex.pie <-function( graph,
    graph$vertex$border <- border
   if( ! is.null(lty) )
     graph$vertex$lty    <- lty
-  
+
   graph$vertex$sides = -1
-  
+
   n <- dim(graph$mat)[1]
-  
+
   # Build vectors describing vertex
   scale.vertex <- graph$resolution * graph$network$vertex.reso
   v.cex    <- rep( graph$vertex$cex                       , length=n)
@@ -455,7 +455,7 @@ Gplot.vertex.pie <-function( graph,
   v.col    <- rep( graph$vertex$col                       , length=n)
   v.border <- rep( graph$vertex$border                    , length=n)
   v.lty    <- rep( graph$vertex$lty                       , length=n)
-  
+
   # remove unused
   use = graph$network$use
   v.radius <-  v.radius[use]
@@ -467,9 +467,9 @@ Gplot.vertex.pie <-function( graph,
   # Display
   if ( display ) {
     x <- graph$network$coord[use,1]
-    y <- graph$network$coord[use,2]   
+    y <- graph$network$coord[use,2]
     n <- length(x)
-    
+
     # Compute the coordinates
     if ( draw.pie ) {
       if (col[1] == -1) {
@@ -486,7 +486,7 @@ Gplot.vertex.pie <-function( graph,
       for (i in 1:n){
         sector.theta <- pie.coef[i, ] * 2 * pi / sum.coef[i]
         sector.start <- rep(0, n.sector )
-        
+
         if ( is.nan( sector.theta[1] ) ) {
           # Null coefficients - No Color
           draw.circle( graph, radius=v.radius[i], sides=-1,
@@ -510,9 +510,9 @@ Gplot.vertex.pie <-function( graph,
           }
         } else {
           for( j in 2:n.sector) {
-            sector.start[j] <- sector.start[j-1] + sector.theta[j-1]  
+            sector.start[j] <- sector.start[j-1] + sector.theta[j-1]
           }
-          
+
           draw.sector( graph, radius=v.radius[i],
                       theta.start=sector.start,
                       theta=sector.theta,
@@ -522,7 +522,7 @@ Gplot.vertex.pie <-function( graph,
       }
     } else {
       draw.circle( graph, radius=v.radius, sides=-1, center.x=x, center.y=y ,
-                  col=v.col, border=v.border, lty=v.lty, ...  )   
+                  col=v.col, border=v.border, lty=v.lty, ...  )
     }
   }
   return( graph )
@@ -544,9 +544,9 @@ Gplot.vertex.label <-function( graph,
 # col    (scalar/vector): label colors.
 # pos           (scalar): label positionning mode
 #                         + 0 labels are placed away from the graph
-#                         + 1 labels are placed below the vertices      
-#                         + 2 labels are placed on the vertex left.      
-#                         + 3 labels are placed above the vertices      
+#                         + 1 labels are placed below the vertices
+#                         + 2 labels are placed on the vertex left.
+#                         + 3 labels are placed above the vertices
 #                         + 4 labels are placed on the vertex right.
 # useboxes        (scalar): frame (box) the labels
 # box.margin      (scalar): margin between the label titles and their boxes
@@ -587,12 +587,12 @@ Gplot.vertex.label <-function( graph,
   use  <- graph$network$use
   x <- graph$network$coord[use,1]
   y <- graph$network$coord[use,2]
-   
+
   if((!all(graph$vertex$label$label==""))&(!all(use==FALSE))){
 
     # Label display mode
     if ( graph$vertex$label$pos == 0 ){
-      
+
       # Labels are placed away from the graph
       xoff <- x - mean(x)
       yoff <- y - mean(y)
@@ -601,7 +601,7 @@ Gplot.vertex.label <-function( graph,
       yhat <- yoff/roff
 
     } else if (graph$vertex$label$pos<5) {
-      
+
       # below (0,-1), left (-1,0), top (0,1) , right (1,0)
       xhat <- switch( graph$vertex$label$pos,  0,-1, 0, 1)
       yhat <- switch( graph$vertex$label$pos, -1, 0, 1, 0)
@@ -610,7 +610,7 @@ Gplot.vertex.label <-function( graph,
       xhat <- 0
       yhat <- 0
     }
-     
+
     # Get character size
     l.cex <- graph$vertex$label$cex
     char.len <- par()$cxy * l.cex
@@ -641,7 +641,7 @@ Gplot.vertex.label <-function( graph,
     text(x + xhat * ( lw*(b.size+0.2) + v.radius ),
          y + yhat * ( lh*(b.size+0.2) + v.radius ),
          label, cex=l.cex, col=graph$vertex$label.col, offset=0, ...)
-    
+
   }
   return ( graph )
 }
@@ -662,9 +662,9 @@ Gplot.radial.vertex.label <-function( graph,
 # col    (scalar/vector): label colors.
 # pos           (scalar): label positionning mode
 #                         + 0 labels are placed away from the graph
-#                         + 1 labels are placed below the vertices      
-#                         + 2 labels are placed on the vertex left.      
-#                         + 3 labels are placed above the vertices      
+#                         + 1 labels are placed below the vertices
+#                         + 2 labels are placed on the vertex left.
+#                         + 3 labels are placed above the vertices
 #                         + 4 labels are placed on the vertex right.
 # useboxes        (scalar): frame (box) the labels
 # box.margin      (scalar): margin between the label titles and their boxes
@@ -708,7 +708,7 @@ Gplot.radial.vertex.label <-function( graph,
 
   if( is.null(class.dims) )
     class.dims <- length(x)
-   
+
   if((!all(graph$vertex$label$label==""))&(!all(use==FALSE))){
 
      # For different circles/classes
@@ -717,15 +717,15 @@ Gplot.radial.vertex.label <-function( graph,
       index.start <-  index.end + 1
       index.end <- class.dims[i.class]
       index.size <- index.end - index.start + 1
-       
+
      # TODO : label placing with circles mode
       xctr = sum( x[ index.start : index.end] ) / (index.size)
       yctr = sum( y[ index.start : index.end] ) / (index.size)
-      
+
     # Label display mode
       if ( graph$vertex$label$pos == 0 ){
 
-      
+
       # Labels are placed away from the graph
         xoff <- x[ index.start : index.end] - xctr
         yoff <- y[ index.start : index.end] - yctr
@@ -735,7 +735,7 @@ Gplot.radial.vertex.label <-function( graph,
         ang <- atan( yoff / xoff )
         ang <- ang[] + 0*(xoff[] < 0) * pi
       } else if (graph$vertex$label$pos<5) {
-      
+
       # below (0,-1), left (-1,0), top (0,1) , right (1,0)
         xhat <- switch( graph$vertex$label$pos,  0,-1, 0, 1)
         yhat <- switch( graph$vertex$label$pos, -1, 0, 1, 0)
@@ -744,7 +744,7 @@ Gplot.radial.vertex.label <-function( graph,
         xhat <- 0
         yhat <- 0
       }
-     
+
     # Get character size
       l.cex <- graph$vertex$label$cex
       char.len <- par()$cxy * l.cex
@@ -764,7 +764,7 @@ Gplot.radial.vertex.label <-function( graph,
     # Shift the label if loops are drawn
       l.shift <- ( graph$network$loop.draw ) * 2 *
         graph$network$vertex.reso * graph$resolution
-    
+
     # Draw boxes
       if( graph$vertex$label$useboxes ){
         rect(x - lw*b.size + xhat*(lw*(b.size+0.2) + v.radius),
@@ -781,11 +781,11 @@ Gplot.radial.vertex.label <-function( graph,
       b.size <- 0.8
       for ( i in 1:index.size ) {
         par(srt= ang[i]*180/pi)
-        
+
       # Text alignment
         just <- 4
         if( xoff[i] < 0) just <- 2
-      
+
         text(x[index.start + i] + xhat[i] * ( l.shift + v.radius[i] ),
              y[index.start + i] + yhat[i] * ( l.shift + v.radius[i] ),
              label[i], cex=l.cex[index.start+i],
@@ -822,7 +822,7 @@ Gplot.edge <-function( graph,
 # graph (list): structure handling all graphics parameters
 #
 # ------------------------------------------------------------------------
-  
+
   graph$edge$col = col
   graph$edge$lty = lty
   graph$edge$lwd = lwd
@@ -834,11 +834,11 @@ Gplot.edge <-function( graph,
 
    # Build vectors describing edges
    # Each edge is a polygon
-   px0<-vector()   
+   px0<-vector()
    py0<-vector()
    px1<-vector()
    py1<-vector()
-   
+
    e.lwd<-vector()  # Create edge attribute vectors
    e.type<-vector()
    e.col<-vector()
@@ -854,9 +854,9 @@ Gplot.edge <-function( graph,
    l.e.col  <- vector()
    l.e.off  <- vector()
    l.e.rad  <- vector()
-   
+
    # Coerce edge.col/edge.lty to array form
-   if(!is.array(graph$edge$col))   
+   if(!is.array(graph$edge$col))
      col <- array(graph$edge$col, dim=dim(graph$mat))
    else
      col <- graph$edge$col
@@ -870,7 +870,7 @@ Gplot.edge <-function( graph,
      else
        lwd<-array(1, dim=dim(graph$mat))
    }
-   
+
    # Used for curved edges
    dist   <- as.matrix( dist(graph$network$coord  ))
    tl     <- graph$mat.raw*dist    # Rescaled edge lengths
@@ -887,13 +887,13 @@ Gplot.edge <-function( graph,
    x <- graph$network$coord[,1]
    y <- graph$network$coord[,2]
 
-   for(i in (1:n)[graph$network$use]) {   
+   for(i in (1:n)[graph$network$use]) {
      for(j in (1:n)[graph$network$use]) {
        if( graph$mat[i,j] ){        # Edge exists
-         px0 <- c(px0,as.real(x[i]))  # Store endpoint coordinates
-         py0 <- c(py0,as.real(y[i]))
-         px1 <- c(px1,as.real(x[j]))
-         py1 <- c(py1,as.real(y[j]))
+         px0 <- c(px0,(x[i]))  # Store endpoint coordinates
+         py0 <- c(py0,(y[i]))
+         px1 <- c(px1,(x[j]))
+         py1 <- c(py1,(y[j]))
          e.toff <-c ( e.toff, v.radius[i] ) # Store endpoint offsets
          e.hoff <-c ( e.hoff, v.radius[j] )
          e.col  <-c ( e.col , col[i,j])     # Store other edge attributes
@@ -901,7 +901,7 @@ Gplot.edge <-function( graph,
          e.lwd  <-c ( e.lwd , lwd[i,j])
          e.diag <-c ( e.diag, i==j)         # Set to true if diagonal
          if(curved){   # Curvature on interpoint distances
-           e.curv      <- c( e.curv, 2 ) 
+           e.curv      <- c( e.curv, 2 )
          }
          if( i == j) {
 #           l.e.rad<-c( l.e.rad, scale.edge*lwd[i,i] * loop.cex )
@@ -913,20 +913,20 @@ Gplot.edge <-function( graph,
 
    # Store loops
    # ------------
-   
+
    if( (length(px0)>0) & loop.draw ){
-     l.px0 <- px0[e.diag] 
+     l.px0 <- px0[e.diag]
      l.py0 <- py0[e.diag]
      l.e.lwd  <- e.lwd[e.diag]
      l.e.type <- e.type[e.diag]
      l.e.col  <- e.col[e.diag]
      l.e.off  <- e.toff[e.diag]
    }
- 
+
    # Remove loops
    # ------------
    if(length(px0)>0){
-     px0 <- px0[!e.diag] 
+     px0 <- px0[!e.diag]
      py0 <- py0[!e.diag]
      px1 <- px1[!e.diag]
      py1 <- py1[!e.diag]
@@ -948,7 +948,7 @@ Gplot.edge <-function( graph,
             o.head=e.hoff, o.tail=e.toff,
             arrow=arrow.draw,
             a.len=pmax( scale.edge * e.lwd * arrow.cex,
-                        scale.arrow ), 
+                        scale.arrow ),
             a.angle = graph$network$arrow.angle,
             ...)
      } else {
@@ -960,10 +960,10 @@ Gplot.edge <-function( graph,
        norm  <- sqrt( (py1 - py0)^2 + (px1 - px0)^2)
        radius <- norm * e.curv
 
-       alpha  <- asin( 0.5 / e.curv ) 
+       alpha  <- asin( 0.5 / e.curv )
        pi.rot <- pi * ((px1 - px0 ) < 0.0 )
 
-       xc <- px0 - radius * cos( (pi/2 + alpha + phi) + pi.rot ) 
+       xc <- px0 - radius * cos( (pi/2 + alpha + phi) + pi.rot )
        yc <- py0 - radius * sin( (pi/2 + alpha + phi) + pi.rot )
 
        theta0 <-   pi*0.5 + phi + alpha - atan2( e.toff, radius ) + pi.rot
@@ -995,8 +995,8 @@ Gplot.edge <-function( graph,
 
      }
    if( (length(l.px0)>0) & loop.draw ){
-   
-     draw.loops( graph, 
+
+     draw.loops( graph,
                 l.px0, l.py0,
                 width   = l.e.lwd * scale.edge,
                 col      = l.e.col,
@@ -1026,7 +1026,7 @@ isolate.vertices<-function( mat. ) {
 # isolate (vector): isolated (if TRUE) vertex vector.
 #
 # ------------------------------------------------------------------------
-  
+
   n <- dim(mat.)[1];
   mat <- mat.
   isolate <- vector()
@@ -1061,7 +1061,7 @@ draw.edges<-function( x0, y0, x1, y1,
 # arrow           (bool): arrows are drawn.
 # a.len   (scalar/vector): arrow head lengths.
 # a.angle (scalar/vector): arrow head angle (in degree).
-#  
+#
 # -------- Return value --------------------------------------------------
 #
 # No value
@@ -1077,15 +1077,15 @@ draw.edges<-function( x0, y0, x1, y1,
   width <- rep(width,length=n)
   col   <- rep(col,length=n)
   lty   <- rep(lty,length=n)
-  
+
   # Offsets
-  o.head  <- rep(o.head,length=n) 
+  o.head  <- rep(o.head,length=n)
   o.tail  <- rep(o.tail,length=n)
 
   # Arrow parameters
   a.angle <- rep(a.angle,length=n)/360*2*pi
   a.len   <- rep(a.len,length=n)
-  
+
   # Debug point
   # cat("xy  :",x0, y0, x1,y1, "\n")
   # cat("width :", width, "\n")
@@ -1103,21 +1103,21 @@ draw.edges<-function( x0, y0, x1, y1,
   # Needed for curved edges
   sqrt2 <- sqrt(2)/2
 
-  for(i in 1:n) {  
+  for(i in 1:n) {
 
     # Edge length
-    slen<-sqrt((x0[i]-x1[i])^2+(y0[i]-y1[i])^2)  
+    slen<-sqrt((x0[i]-x1[i])^2+(y0[i]-y1[i])^2)
 
     # Arrow longuer than edge
     a.len[i] <-  min( 0.9*(slen - (o.head[i] + o.tail[i])), a.len[i])
 
-      
-    # If the node distance is greater than the arrow size 
+
+    # If the node distance is greater than the arrow size
     if (arrow & a.len[i] > 0 ){
       #  With Arrows
       a.sin = sin( a.angle[i] )
       a.cos = cos( a.angle[i] )
-      XY<-rbind(                    
+      XY<-rbind(
                   c( - width[i]/2      , o.tail[i]),
                   c( - width[i]/2      , slen - 0.5*a.len[i] - o.head[i]),
                   c( - a.len[i] * a.sin, slen - a.len[i]*a.cos - o.head[i]),
@@ -1128,9 +1128,9 @@ draw.edges<-function( x0, y0, x1, y1,
                   c(   NA              , NA)
                 )
     } else {
-        
+
       #  Without Arrows
-      XY<-rbind(                    
+      XY<-rbind(
                   c( - width[i]/2, o.tail[i]       ),
                   c( - width[i]/2, slen - o.head[i]),
                   c(   width[i]/2, slen - o.head[i]),
@@ -1138,18 +1138,18 @@ draw.edges<-function( x0, y0, x1, y1,
                   c(   NA,      NA)
                 )
     }
-    
+
     # Rotate
-    theta <- atan2(y1[i]-y0[i],x1[i]-x0[i])-pi/2     
+    theta <- atan2(y1[i]-y0[i],x1[i]-x0[i])-pi/2
     rmat  <- rbind(c(cos(theta),sin(theta)),c(-sin(theta),cos(theta)))
     XY    <- XY %*% rmat
     # Translate
-    XY[,1] <- XY[,1]+x0[i]            
+    XY[,1] <- XY[,1]+x0[i]
     XY[,2] <- XY[,2]+y0[i]
-  
+
     coord<-rbind( coord, XY)
   }
-  
+
   #coord<-coord[-NROW(coord),]
 
   #Draw polygons
@@ -1160,7 +1160,7 @@ draw.circle <- function ( graph, radius, sides, center.x, center.y ,
                            col, border, lty, ...  ) {
 # -------- Arguments -----------------------------------------------------
 # graph                  : current graph
-# radius (scalar/vector) : circle radii. 
+# radius (scalar/vector) : circle radii.
 # sides (scalar/vector)  : number of sides to draw a regular polygon
 #                          if -1 the number of sides is done to approximate a circle
 # center.x[.y] (scalar/vector) : coordinates of the circle center .
@@ -1168,12 +1168,12 @@ draw.circle <- function ( graph, radius, sides, center.x, center.y ,
   compute.side.nbr <- TRUE
   if( sides[1] != -1 )
     compute.side.nbr <- FALSE
-    
+
   if ( compute.side.nbr ) {
     xy.size <- min( diff( graph$graphics$xlim ),  diff( graph$graphics$xlim ) )
     sides <- 2 * pi * 500 * radius / xy.size
   }
-  
+
   coord<-vector()
   n <- length( radius )
   for(i in 1:n){
@@ -1191,7 +1191,7 @@ draw.sector <- function ( graph, radius, theta.start, theta, center.x, center.y 
                           col, border, lty, ...  ) {
 # -------- Arguments -----------------------------------------------------
 # graph                  : current graph
-# radius (scalar/vector) : circle radii. 
+# radius (scalar/vector) : circle radii.
 # theta.start            : initial angle to start the sector
 # theta                  : sector angle
 # center.x[.y] (scalar/vector)       : coordinates of the circle center .
@@ -1205,9 +1205,9 @@ draw.sector <- function ( graph, radius, theta.start, theta, center.x, center.y 
   }
   xy.size <- min( diff( graph$graphics$xlim ),  diff( graph$graphics$xlim ) )
   sides <- round( theta * 500 * radius / xy.size )
-  
+
   coord<-vector()
-    
+
   for(i in 1:n){
     ang <- (0:sides[i])/sides[i] * theta[i] + theta.start[i]
     dx  <- radius[i]*cos(ang)
@@ -1227,7 +1227,7 @@ draw.arc <- function ( graph, radius = radius,
                        col = col, width = width, lty = lty,...  ) {
 # -------- Arguments -----------------------------------------------------
 # graph                  : current graph
-# radius (scalar/vector) : circle radii. 
+# radius (scalar/vector) : circle radii.
 # theta.start            : initial angle to start the circle
 # theta                  : arc angle
 # xc, yc (scalar/vector) : coordinates of the circle center .
@@ -1239,16 +1239,16 @@ draw.arc <- function ( graph, radius = radius,
   # Shape factor for the arrow
   a.shape.factor <- 0.5
   xy.size <- min( diff( graph$graphics$xlim ),  diff( graph$graphics$xlim ) )
-  
+
   # Number of sides
   a.phi <- 0
   if( arrow ) {
-    # remove a.len /2 
+    # remove a.len /2
     a.phi <- sign(theta)*asin( .666 * a.len[]  / radius[] )
     a.sin <- sin( a.angle[] )
   }
-  
-  # Remove the arrow 
+
+  # Remove the arrow
   theta.var <- (theta - a.phi)
   sides <-abs(  round( theta.var * 30 * radius / xy.size ) )
 
@@ -1282,14 +1282,14 @@ draw.arc <- function ( graph, radius = radius,
     # cat( "dx.rev[1] = ", dx.rev[1] + xc[i], "\n")
     # cat( "dy.rev[1] = ", dy.rev[1] + yc[i], "\n")
     # cat( "ang[1]    = ", rev(ang)[1], "\n")
-        
+
     coord <- rbind( coord, cbind( xc[i]+dx, yc[i]+dy ) )
 
     if( arrow ) {
       coord <- rbind( coord, cbind( xc[i] + c( dx1, dx2, dx3 ),
                                     yc[i] + c( dy1, dy2, dy3 ) ) )
     }
-    
+
     coord <- rbind( coord, cbind( xc[i]+dx.rev, yc[i]+dy.rev ),
                     c(NA,NA) )
   }
@@ -1306,38 +1306,38 @@ draw.loops <- function ( graph,
                             arrows = FALSE, a.len = 0.1, a.angle = 10,
                             xctr=0, yctr=0, ... ) {
 
-  # Compute "theta" versus "rho" and the coefficient "stroph.coef" of the function 
+  # Compute "theta" versus "rho" and the coefficient "stroph.coef" of the function
   RhoToTheta <- function( stroph.coef, rho) {
     var <- 0.25/stroph.coef[] *
-                 ( rho[] + sqrt( rho[]^2 + 8*stroph.coef[]^2) ) 
+                 ( rho[] + sqrt( rho[]^2 + 8*stroph.coef[]^2) )
     if ( all( abs(var) > 1) ) {
         cat("Gplot error: bad loop caracteristics \n")
       }
     theta <- acos( var  )
-  } 
+  }
 
   # Number of loops
   np <- length(xc)
 
   if (length( a.angle ) == 1) a.angle <- rep( -1, np )
-  
+
   # Test if arrows are too large
   arrow <- arrows & (a.len[] < 2 * cex)
   stroph.coef <- cex[]
-  
+
   # Shape factor for the arrow
   a.shape.factor <- 0.6
 
   # Remove width nul values
   indexes <- which( width[] < 1/400 )
   width[indexes] <- 1/400
-  
+
   # Remove a.len nul values
   indexes <- which( a.len[] < 1/400 )
-  a.len[indexes] <- stroph.coef[indexes] / 4 
+  a.len[indexes] <- stroph.coef[indexes] / 4
 
   a.angle[indexes] <- 20*pi/180
-  
+
   # Compute the arrow angle
   indexes <- which( a.angle[] == -1 )
   a.angle[indexes] <-
@@ -1357,57 +1357,57 @@ draw.loops <- function ( graph,
 
   r.end <- r.beg + arrow[] * a.shape.factor * a.len[]
 
-  
+
   # Loop rotation
   theta0.rot <- 0
 
   index <- which( abs(xc[] - xctr) > .Machine$double.eps)
   theta0.rot[ index ] <- - atan( (yc[index] - yctr) / (xc[index] - xctr) ) +
-                           pi * ( (xc[index] - xctr) < 0 ) 
+                           pi * ( (xc[index] - xctr) < 0 )
 
   # Starting and ending angle of the middle loop
-  theta.beg.stroph <- - RhoToTheta( stroph.coef[], r.beg[] ) 
-  theta.end.stroph <- RhoToTheta( stroph.coef[], r.end[] ) 
+  theta.beg.stroph <- - RhoToTheta( stroph.coef[], r.beg[] )
+  theta.end.stroph <- RhoToTheta( stroph.coef[], r.end[] )
 
   # Starting Angles of the internal(min) and external(max) loops (min)
   x.stroph.min <- r.beg[] * cos( theta.beg.stroph ) - 0.5 * 0.5*width[] * cos(pi- theta.beg.stroph)
   y.stroph.min <- r.beg[] * sin( theta.beg.stroph ) - 0.5 * 0.5*width[] * sin(pi- theta.beg.stroph)
   x.stroph.max <- r.beg[] * cos( theta.beg.stroph ) + 0.5 * 0.5*width[] * cos(pi- theta.beg.stroph)
   y.stroph.max <- r.beg[] * sin( theta.beg.stroph ) + 0.5 * 0.5*width[] * sin(pi- theta.beg.stroph)
-  
+
   rho.stroph.min <- sqrt(  (x.stroph.min - 0.5*width[])^2 + y.stroph.min^2 )
   rho.stroph.max <- sqrt(  (x.stroph.max + 0.5*width[])^2 + y.stroph.max^2 )
-  theta.beg.stroph.min <- - RhoToTheta( stroph.coef[]-0.5*width[], rho.stroph.min   ) 
-  theta.beg.stroph.max <- - RhoToTheta( stroph.coef[]+1.0*width[], rho.stroph.max ) 
+  theta.beg.stroph.min <- - RhoToTheta( stroph.coef[]-0.5*width[], rho.stroph.min   )
+  theta.beg.stroph.max <- - RhoToTheta( stroph.coef[]+1.0*width[], rho.stroph.max )
 
   # End Angles of the internal(min) and external(max) loops (min)
   x.stroph.min <- r.end[] * cos( theta.end.stroph ) + 0.5 * 0.5*width[] * sin(pi- theta.end.stroph)
   y.stroph.min <- r.end[] * sin( theta.end.stroph ) + 0.5 * 0.5*width[] * cos(pi- theta.end.stroph)
   x.stroph.max <- r.end[] * cos( theta.end.stroph ) - 0.5 * 0.5*width[] * sin(pi- theta.end.stroph)
   y.stroph.max <- r.end[] * sin( theta.end.stroph ) - 0.5 * 0.5*width[] * cos(pi- theta.end.stroph)
-  
+
   rho.stroph.min <- sqrt(  (x.stroph.min - 0.5*width[])^2 + y.stroph.min^2 )
   rho.stroph.max <- sqrt(  (x.stroph.max+0.5*width[])^2 + y.stroph.max^2 )
 
-  theta.end.stroph.min <-   RhoToTheta( stroph.coef[]-0.5*width[], rho.stroph.min   )  
-  theta.end.stroph.max <-   RhoToTheta( stroph.coef[]+1.0*width[], rho.stroph.max)  
+  theta.end.stroph.min <-   RhoToTheta( stroph.coef[]-0.5*width[], rho.stroph.min   )
+  theta.end.stroph.max <-   RhoToTheta( stroph.coef[]+1.0*width[], rho.stroph.max)
   theta.stroph.min <- theta.end.stroph.min  - theta.beg.stroph.min
   theta.stroph.max <- theta.end.stroph.max  - theta.beg.stroph.max
-  
+
   sides <-abs(  round( theta.stroph.max[] * 400 * stroph.coef[] / xy.size ) )
 
 ### brute (julien)
-  
+
   if (length(sides) < np) {
     sides <- rep(sides,np)
     arrow <- rep(arrow,np)
     width <- rep(width,np)
   }
-  
+
   coord<-vector()
   a.du <- vector(); a.dv <- vector();
   a.dx <- vector(); a.dy <- vector();
-  
+
   n <- length( stroph.coef )
   for( i in 1:np ){
     ang <- (0:sides[i])/sides[i] * ( theta.stroph.min[i]  ) +
@@ -1416,18 +1416,18 @@ draw.loops <- function ( graph,
     sin.ang <- sin(ang)
     cos.rot <- cos(theta0.rot[i])
     sin.rot <- sin(theta0.rot[i])
-    
+
     # Debug
     # draw.rot.poly( xc[i], yc[i], x.stroph.min[i], y.stroph.min[i],
-    #                c(0,0), cos.rot, sin.rot, color="red" ) 
+    #                c(0,0), cos.rot, sin.rot, color="red" )
     # draw.rot.poly( xc[ i], yc[i], x.stroph.max[i], y.stroph.max[i],
-    #                c(0,0),  cos.rot, sin.rot, color="blue" ) 
+    #                c(0,0),  cos.rot, sin.rot, color="blue" )
 
-    du  <- ((stroph.coef[i]-0.5*width[i])*(2*cos.ang - 1.0/cos.ang) ) * cos.ang 
+    du  <- ((stroph.coef[i]-0.5*width[i])*(2*cos.ang - 1.0/cos.ang) ) * cos.ang
     dv  <- ((stroph.coef[i]-0.5*width[i])*(2*cos.ang - 1.0/cos.ang) ) * sin.ang
     # Debug
     # draw.rot.poly( xc[i], yc[i], du[1]+0.5*width[i], dv[1],
-    #               c(0,0),  cos.rot, sin.rot ) 
+    #               c(0,0),  cos.rot, sin.rot )
     dx <-   (du + 0.5*width[i]) *  cos.rot + (dv)* sin.rot
     dy <- - (du + 0.5*width[i]) *  sin.rot + (dv)* cos.rot
 
@@ -1438,14 +1438,14 @@ draw.loops <- function ( graph,
       y.end <- r.end[i] * sin(theta.end.stroph[i])
       x.beg <- r.beg[i] * cos(theta.end.stroph[i])
       y.beg <- r.beg[i] * sin(theta.end.stroph[i])
-      beta <- atan( (y.end - y.beg) / (x.end - x.beg) )                 
-      # phasis -0.05 
+      beta <- atan( (y.end - y.beg) / (x.end - x.beg) )
+      # phasis -0.05
       a.du[1] <- x.beg + a.len[i] * cos( beta - 1.0*a.angle[i] - 0.05)
       a.dv[1] <- y.beg + a.len[i] * sin( beta - 1.0*a.angle[i] -0.05)
-      
+
       a.du[2] <- x.beg
       a.dv[2] <- y.beg
-      
+
       a.du[3] <- x.beg + a.len[i] * cos( beta  + 1.0*a.angle[i] -0.05)
       a.dv[3] <- y.beg + a.len[i] * sin( beta  + 1.0*a.angle[i] -0.05)
 
@@ -1475,7 +1475,7 @@ draw.loops <- function ( graph,
       coord <- rbind( coord, cbind( xc[i] + a.dx[],
                                     yc[i] + a.dy[] ) )
     }
-    
+
     coord <- rbind( coord, cbind( xc[i]+dx.rev, yc[i]+dy.rev ),
                     c(NA,NA) )
   }
@@ -1485,7 +1485,7 @@ draw.loops <- function ( graph,
 
 # Debug utility
 draw.rot.poly <- function(xc,yc,x, y, shift=c(0,0), cos.rot, sin.rot, color="black"){
-  
+
       xx <- xc + (x[] + shift[1]) *  cos.rot + (y[])* sin.rot
       yy <- yc - (x[] + shift[1]) *  sin.rot + (y[])* cos.rot
       polygon( cbind( xx, yy), col=color )
@@ -1508,7 +1508,7 @@ light.palette <- function( n, black=TRUE, format="rgb" ){
 #          0    , 0.376, 0.6  , 0.8  , 0.9  , 0.95 , 1    , 1    , 1    ,
 #          1    , 1    , 1    , 1
 #        )
-#  G1.ref <- c( 0    , 0    , 0    , 
+#  G1.ref <- c( 0    , 0    , 0    ,
 #          0    , 0.294, 0.498, 0.725, 0.933, 1    , 1    , 1    ,
 #          1    , 1    , 1    , 1    , 1    , 1    , 1    , 0.9  ,0.796,
 #          0.7  , 0.569, 0.365,
@@ -1526,7 +1526,7 @@ light.palette <- function( n, black=TRUE, format="rgb" ){
           1    , 1    , 1    , 1
         )
 
-  G1 <- c( 0    , 0    , 0    , 
+  G1 <- c( 0    , 0    , 0    ,
           0    , 0.294, 0.498, 0.725, 0.933, 1    ,
           1    , 1    , 1    , 1    , 1    , 1    , 0.95 , 0.9  , 0.796,
           0.7  , 0.569, 0.365,
@@ -1534,12 +1534,12 @@ light.palette <- function( n, black=TRUE, format="rgb" ){
         )
 
   B1 <- c( 0    , 0.5  , 0.750,
-          1    , 1    , 1    , 1    , 1    , 0.659, 
+          1    , 1    , 1    , 1    , 1    , 0.659,
           0    , 0    , 0    , 0.2    , 0.4    , 0.7    , 0.2    , 0.2    , 0    ,
           0    , 0    , 0    , 0
         )
   if( n > 1 ) {
-    
+
     X1 <- 1:length( R1 )
     X <- (0:(n-1)) * (length(R1)-1) / (n-1) + 1
 
@@ -1555,7 +1555,7 @@ light.palette <- function( n, black=TRUE, format="rgb" ){
     G$y <- G$y[-1]
     B$y <- B$y[-1]
   }
-  
+
  if (format == "rgb" )
   val <- rgb(R$y, G$y, B$y)
  else
@@ -1578,7 +1578,7 @@ color.lightening <- function( RGB, contrast=0.1) {
         RGB[i, ] <-  RGB[i, ] + contrast
       }
     }
-     
+
     if( dI > dJ ){
       # Get darker
       RGB[i, ] <-  RGB[i, ] - dI
@@ -1587,12 +1587,12 @@ color.lightening <- function( RGB, contrast=0.1) {
       RGB[i, ] <-  RGB[i, ] + dJ
     }
   }
-  
+
   index <- which( RGB[] < 0.0 )
   RGB[index] <- 0.0
 
   index <- which( RGB[] > 1.0 )
   RGB[index] <- 1.0
-  
+
   val <- rgb( RGB[,1], RGB[,2], RGB[,3] )
 }
