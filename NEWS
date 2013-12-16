@@ -1,5 +1,8 @@
 NEWS/Changelog
 
+1.0-2	(2013-12-16)
+    +   Remove use of the deprecated function "as.real" since R 3.0
+
 1.0-1	(2010-10-24)
     +   Fix warning with R 2.14
 
@@ -10,12 +13,12 @@ NEWS/Changelog
     +   Complete rewrite of the package
     +   New inference methods: multitask learning, VAR(1) inference
     +   New plotting functions for network representation
-	
+
 0.1-3	(2009-05-28)
-    +	Minor bug in JRx computation. 
+    +	Minor bug in JRx computation.
 
 0.1-2	(2009-02-23)
-    +	fixing documentation errors occured with R-devel version 
+    +	fixing documentation errors occured with R-devel version
         (2.9.0 2009-02-19 r47958).
 
 0.1-1	(2008-10-20)

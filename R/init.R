@@ -5,7 +5,7 @@
     packageStartupMessage("")
     packageStartupMessage("----------------------------------------------------------------------")
     packageStartupMessage("")
-    packageStartupMessage("      'simone' package version 1.0-0")
+    packageStartupMessage("      'simone' package version 1.0-2")
     packageStartupMessage("      SIMoNe page (http://stat.genopole.cnrs.fr/software/simone)")
     packageStartupMessage("")
     packageStartupMessage("----------------------------------------------------------------------")
