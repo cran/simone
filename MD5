@@ -1,13 +1,13 @@
-a61979186d862cfd73fa37449aaf0e87 *DESCRIPTION
-dd76d7a4a1ae51d7fec936c67cf168b9 *NAMESPACE
-64b5cd3b4c6ef231856dad0bef2a41ac *NEWS
+46863bf0cb7e87b13d16dc1bbf36793d *DESCRIPTION
+61b2d4ab130a90d5aef3236ea56c5e8f *NAMESPACE
+eeaab22b506d4367d8a4d27dd8dac866 *NEWS
 14daa3308b6c08490b94c067e8c57e4e *R/Gplot-internals.R
 a269a6dcba3a6253c2c01705ec2c23e5 *R/Gplot.R
 ba9b69d0bf3433d2b70dcccaf173f988 *R/InferClasses.R
 25f882c23c5fae72e03bb47953f53575 *R/InferEdges-internals.R
 2ac5b555a851a145ce023d01ab1ba344 *R/InferEdges.R
 059f72826f692b36ebbe612d48b12cc1 *R/SimData.R
-e46a67b1f813ed2b5b9ba606ded381cc *R/init.R
+637ac651010776358ef13f33beb49ed0 *R/init.R
 56aa20db1f9ae6ecf5abb82cfbafe070 *R/plot.simone.R
 ebd642d88aa06d0f97e9f043244091b9 *R/plot.simone.network.R
 35c06b5ed7efbc25482dfa7fb6b2d541 *R/simone.R
@@ -19,7 +19,7 @@ bf0c9a571a84210c0f31912ba372a757 *demo/check_glasso.R
 2cbe3614dbccdb6fea1bf16fae645879 *demo/simone_multitask.R
 fb0aa1187b0ed0294ed25df52734a3bb *demo/simone_steadyState.R
 922ae2873a83610f3d6bdf70264dcaeb *demo/simone_timeCourse.R
-27b73f1548bad16ffb231db24737cada *inst/CITATION
+2ca0c367a7c2dbae9ee6e5ea22fc22e5 *inst/CITATION
 cecf2a1fc5e3de01ffe321bbdb3bb6f5 *man/coNetwork.Rd
 87a889ca7359550ff139417172f0cdb0 *man/data-cancer.Rd
 6aa46713e5f98f16931ad22dde6536ae *man/getNetwork.Rd
@@ -30,7 +30,7 @@ fcbf650b58b9b4808b3514fb77f41444 *man/plot.simone.Rd
 02c89237f866619c54915b14fc7dca03 *man/setOptions.Rd
 e81025e4f882d9959d67d516622ef635 *man/simone-internal.Rd
 882894f2f0d8bff62d2aace8fa1efc15 *man/simone-package.Rd
-ed9786d07822a6365d5a04d6caf4ed6a *man/simone.Rd
+16c7a03c5c9f691069a88cfc914a5997 *man/simone.Rd
 b54d6121bfe783907c05d9c471457980 *src/inference_algos.c
 3109568b6e030da5e67e333d18d1e07e *src/inference_utils.h
 b4a8752d5151636165caf4764f587bfd *src/matrix.h

@@ -1,5 +1,8 @@
 NEWS/Changelog
 
+1.0-3	(2016-01-22)
+    +   Remove use of deprecated arguments in "person()"
+
 1.0-2	(2013-12-16)
     +   Remove use of the deprecated function "as.real" since R 3.0
 

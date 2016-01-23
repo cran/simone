@@ -1,25 +1,26 @@
 Package: simone
-Version: 1.0-2
-Date: 2013-12-16
+Version: 1.0-3
+Date: 2016-01-06
 Title: Statistical Inference for MOdular NEtworks (SIMoNe)
 Author: Julien Chiquet <julien.chiquet@genopole.cnrs.fr>, Gilles
-        Grasseau <gilles.grasseau@genopole.cnrs.fr>, Camille
-        Charbonnier <camille.charbonnier@genopole.cnrs.fr>, Christophe
-        Ambroise <christophe.ambroise@genopole.cnrs.fr>.
+    Grasseau <gilles.grasseau@genopole.cnrs.fr>, Camille
+    Charbonnier <camille.charbonnier@genopole.cnrs.fr>, Christophe
+    Ambroise <christophe.ambroise@genopole.cnrs.fr>.
 Maintainer: Julien Chiquet <julien.chiquet@genopole.cnrs.fr>
 Depends: R (>= 2.7), mixer
-Description: The R package simone implements the inference of
-        co-expression networks based on partial correlation
-        coefficients from either steady-state or time-course
-        transcriptomic data. Note that with both type of data this
-        package can deal with samples collected in different
-        experimental conditions and therefore not identically
-        distributed. In this particular case, multiple but related
-        networks are inferred on one simone run.
+Description: Implements the inference of
+    co-expression networks based on partial correlation
+    coefficients from either steady-state or time-course
+    transcriptomic data. Note that with both type of data this
+    package can deal with samples collected in different
+    experimental conditions and therefore not identically
+    distributed. In this particular case, multiple but related
+    networks are inferred on one simone run.
 License: GPL (>= 2)
-URL: http://stat.genopole.cnrs.fr/software/simone
+URL: http://julien.cremeriefamily.info/simone.html
 Encoding: UTF-8
-Packaged: 2013-12-16 13:24:27 UTC; jchiquet
+Packaged: 2016-01-22 22:03:32 UTC; jchiquet
 Repository: CRAN
-Date/Publication: 2013-12-16 17:17:32
+Date/Publication: 2016-01-23 00:27:46
+RoxygenNote: 5.0.1
 NeedsCompilation: yes

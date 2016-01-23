@@ -5,9 +5,9 @@ citEntry(entry       = "techreport",
          institution = "arXiv",
          year        = "2010",
          author      = personList(
-           person(first="Julien", last="Chiquet"),
-           person(first="Yves", last="Grandvalet"),
-           person(first="Christophe", last="Ambroise")),         
+           person(given="Julien", family="Chiquet"),
+           person(given="Yves", family="Grandvalet"),
+           person(given="Christophe", family="Ambroise")),         
          textVersion = "J. Chiquet, Y. Grandvalet, and C. Ambroise (preprint). Inferring multiple graphical structures. preprint available on ArXiv : http://arxiv.org/abs/0912.4434.")
 
 citEntry(entry   = "Article",
@@ -17,9 +17,9 @@ citEntry(entry   = "Article",
          number  = "1",
          year    = "2010",
          author  = personList(
-           person(first="Camille", last="Charbonnier"),
-           person(first="Julien", last="Chiquet"),
-           person(first="Christophe", last="Ambroise")),
+           person(given="Camille", family="Charbonnier"),
+           person(given="Julien", family="Chiquet"),
+           person(given="Christophe", family="Ambroise")),
          textVersion = "C. Charbonnier, J. Chiquet,  and C. Ambroise (2010). Weighted-Lasso for Structured Network Inference from Time Course Data. Statistical   Applications in Genetics and Molecular Biology, vol. 9, iss. 1,   article 15. http://www.bepress.com/sagmb/vol9/iss1/art15/")
 
 citEntry(entry  = "Article",
@@ -29,8 +29,8 @@ citEntry(entry  = "Article",
          pages  = "205--238",
          year   = "2009",
          author  = personList(
-           person(first="Christophe", last="Ambroise"),
-           person(first="Julien", last="Chiquet"),
-           person(first="Catherine", last="Matias")),
+           person(given="Christophe", family="Ambroise"),
+           person(given="Julien", family="Chiquet"),
+           person(given="Catherine", family="Matias")),
          textVersion = "C. Ambroise, J. Chiquet, and C. Matias (2009). Inferring sparse Gaussian graphical models with latent structure. Electronic Journal of Statistics, vol. 3, pp. 205--238. http://dx.doi.org/10.1214/08-EJS314")
 

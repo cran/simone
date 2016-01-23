@@ -207,8 +207,10 @@ plot(simone(expr))
 ## try with clustering now (clustering is achieved on a 30-edges network)
 plot(simone(expr, clustering=TRUE, control=setOptions(clusters.crit=30)))
 
+\dontrun{
 ## try the multiple sample
 plot(simone(expr, tasks=status))
+}
 
 detach(cancer)
 }
