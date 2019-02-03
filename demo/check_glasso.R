@@ -9,7 +9,6 @@ require(glasso)
 p    <- 80
 g    <- rNetwork(p, pi=p)
 data <- rTranscriptData(n=2*p,g)
-attach(data)
 
 cat("---------------------------------------------------------------",
     ""                                                               ,
@@ -25,10 +24,10 @@ cat("---------------------------------------------------------------",
 cat("\n\n Check consistency between the glasso package and the simone package")
 
 rho <-  0.2 # Fix the penalty level to 0.2
-theta.glasso <- glasso(var(scale(X)), rho=rho)$wi # GLasso package
+theta.glasso <- glasso(var(scale(data$X)), rho=rho)$wi # GLasso package
 
 control      <- setOptions(penalties=rho, edges.steady="graphical.lasso", )
-theta.simone <- simone(X, control=control)$networks[[1]] # SIMoNe
+theta.simone <- simone(data$X, control=control)$networks[[1]] # SIMoNe
 
 cat("\n norm2-error between the two solutions: ",
     sqrt(sum((theta.simone - theta.glasso)^2)))
@@ -52,7 +51,6 @@ plot(net.glasso,net.simone)
 cat("\n\n")
 readline("Press enter for the full path (thanks to simone :) )")
 control <- setOptions(edges.steady="graphical.lasso")
-out     <- simone(X, control=control) # SIMoNe
+out     <- simone(data$X, control=control) # SIMoNe
 plot(out, ask=FALSE)
 
-detach(data)

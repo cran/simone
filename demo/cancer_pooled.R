@@ -3,10 +3,9 @@ library(simone)
 
 ## the data set
 data(cancer)
-attach(cancer)
 
 ## no clustering by default
-res.no <- simone(expr)
+res.no <- simone(cancer$expr)
 plot(res.no, ask=FALSE)
 g.no <- getNetwork(res.no, 30)
 plot(g.no)
@@ -23,4 +22,3 @@ g.cl$name <- "clustering prior"
 g.no$name <- "no clustering prior"
 plot(g.no,g.cl)
 
-detach(cancer)

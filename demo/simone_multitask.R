@@ -15,11 +15,10 @@ plot(child1,child2)
 ## multiple sample setup
 n <- c(3*p,3*p)
 data  <- rTranscriptData(n,child1,child2)
-attach(data)
 
 ## Running multitak simone with coopLasso coupling (default)
 control <- setOptions(penalty.max=0.1, penalty.min=0.015) 
-res     <- simone(X, tasks=tasks, control=control)
+res     <- simone(data$X, tasks=tasks, control=control)
 
 ## Plotting the results
 plot(res, ref.graph=list(child1$Theta,child2$Theta), ask=FALSE)
@@ -28,4 +27,3 @@ plot(glist[[1]],glist[[2]])
 plot(child1, glist[[1]])
 plot(child2, glist[[2]])
 
-detach(data)

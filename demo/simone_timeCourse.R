@@ -13,12 +13,11 @@ data  <- rTranscriptData(n,g)
 
 control <- setOptions(edges.max=150)
 
-attach(data)
-res.no <- simone(X, type="time-course", control=control)
+res.no <- simone(data$X, type="time-course", control=control)
 g.no <- getNetwork(res.no, 80)
 plot(g,g.no)
 
-res.cl <- simone(X, type="time-course", clustering=TRUE, control=control)
+res.cl <- simone(data$X, type="time-course", clustering=TRUE, control=control)
 g.cl <- getNetwork(res.cl, 80)
 plot(g,g.cl)
 
@@ -26,4 +25,3 @@ g.no$name <- "without clustering"
 g.cl$name <- "with clustering"
 plot(g.no,g.cl)
 
-detach(data)

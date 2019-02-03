@@ -1,5 +1,9 @@
 NEWS/Changelog
 
+1.0-4	(2019-02-03)
+    +   Replacing "mixer" by "blockmodels"
+    +   registering C functions
+
 1.0-3	(2016-01-22)
     +   Remove use of deprecated arguments in "person()"
 

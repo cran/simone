@@ -7,10 +7,9 @@ p    <- 50
 n    <- 3*p # quite favorable settings :)
 g    <- rNetwork(p, pi=p, name="Theorical Network")
 data <- rTranscriptData(n,g)
-attach(data)
 
 ## Running simone
-res <- simone(X, type="steady-state")
+res <- simone(data$X, type="steady-state")
 
 ## Plotting the results
 plot(res, ref.graph=g$A, ask=FALSE)
@@ -18,4 +17,3 @@ plot(res, ref.graph=g$A, ask=FALSE)
 ## Compare the network (assuming the number of edges is known)
 plot(g,getNetwork(res, p))
 
-detach(data)
